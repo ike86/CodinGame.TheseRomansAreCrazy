@@ -10,7 +10,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
         public class Parse
         {
             [TestMethod]
-            public void ReturnsOne_If_NumeralIsI()
+            public void ReturnsOne_If_NumeralIs_I()
             {
                 var subject = CreateSubject();
 
@@ -20,7 +20,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
             }
 
             [TestMethod]
-            public void ReturnsTwo_If_NumeralIsII()
+            public void ReturnsTwo_If_NumeralIs_II()
             {
                 var subject = CreateSubject();
 
@@ -30,13 +30,33 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
             }
 
             [TestMethod]
-            public void ReturnsThree_If_NumeralIsIII()
+            public void ReturnsThree_If_NumeralIs_III()
             {
                 var subject = CreateSubject();
 
                 var result = subject.Parse("III");
 
                 result.Should().Be(3);
+            }
+
+            [TestMethod]
+            public void ReturnsFive_If_NumeralIs_V()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("V");
+
+                result.Should().Be(5);
+            }
+
+            [TestMethod]
+            public void ReturnsEigth_If_NumeralIs_VIII()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("VIII");
+
+                result.Should().Be(8);
             }
 
             private static RomanNumeralParser CreateSubject()

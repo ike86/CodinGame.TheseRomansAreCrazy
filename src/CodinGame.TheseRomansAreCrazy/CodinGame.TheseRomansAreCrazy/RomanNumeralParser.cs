@@ -10,7 +10,8 @@ namespace CodinGame.TheseRomansAreCrazy
     {
         public int Parse(string numeral)
         {
-            return numeral.Count(ch => ch == 'I');
+            return numeral.Count(ch => ch == 'V') * 5
+                + numeral.Count(ch => ch == 'I');
         }
     }
 }
