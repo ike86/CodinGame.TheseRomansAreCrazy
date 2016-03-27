@@ -9,6 +9,10 @@ namespace CodinGame.TheseRomansAreCrazy
 {
     public class RomanNumeralParser
     {
+        private static TokenParser OneHundredParser = new SimpleTokenParser('C', 100);
+
+        private static TokenParser FiftyParser = new SimpleTokenParser('L', 50);
+
         private static TokenParser NineParser = new ModifiedTokenParser('I', 1, 'X', 10);
 
         private static TokenParser TenParser = new SimpleTokenParser('X', 10);
@@ -22,6 +26,10 @@ namespace CodinGame.TheseRomansAreCrazy
         private IEnumerable<TokenParser> tokenParsers =
             new TokenParser[]
             {
+                OneHundredParser,
+                OneHundredParser,
+                OneHundredParser,
+                FiftyParser,
                 NineParser,
                 TenParser,
                 NineParser,
