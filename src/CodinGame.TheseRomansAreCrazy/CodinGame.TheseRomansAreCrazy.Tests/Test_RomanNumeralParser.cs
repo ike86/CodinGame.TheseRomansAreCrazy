@@ -128,8 +128,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be(100);
             }
-
-
+            
             [TestMethod]
             public void ReturnsThreeHundred_If_NumeralIs_CCC()
             {
@@ -138,6 +137,16 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
                 var result = subject.Parse("CCC");
 
                 result.Should().Be(300);
+            }
+
+            [TestMethod]
+            public void ReturnsFourty_If_NumeralIs_XL()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("XL");
+
+                result.Should().Be(40);
             }
 
             private static RomanNumeralParser CreateSubject()

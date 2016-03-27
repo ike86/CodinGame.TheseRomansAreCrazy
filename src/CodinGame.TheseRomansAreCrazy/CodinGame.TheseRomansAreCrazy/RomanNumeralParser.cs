@@ -9,39 +9,54 @@ namespace CodinGame.TheseRomansAreCrazy
 {
     public class RomanNumeralParser
     {
-        private static TokenParser OneHundredParser = new SimpleTokenParser('C', 100);
+        private readonly TokenParser oneHundredParser;
 
-        private static TokenParser FiftyParser = new SimpleTokenParser('L', 50);
+        private readonly TokenParser fourtyParser;
 
-        private static TokenParser NineParser = new ModifiedTokenParser('I', 1, 'X', 10);
+        private readonly TokenParser fiftyParser;
 
-        private static TokenParser TenParser = new SimpleTokenParser('X', 10);
+        private readonly TokenParser nineParser;
 
-        private static TokenParser FourParser = new ModifiedTokenParser('I', 1, 'V', 5);
+        private readonly TokenParser tenParser;
 
-        private static TokenParser FiveParser = new SimpleTokenParser('V', 5);
+        private readonly TokenParser fourParser;
 
-        private static TokenParser OneParser = new SimpleTokenParser('I', 1);
+        private readonly TokenParser fiveParser;
 
-        private IEnumerable<TokenParser> tokenParsers =
-            new TokenParser[]
-            {
-                OneHundredParser,
-                OneHundredParser,
-                OneHundredParser,
-                FiftyParser,
-                NineParser,
-                TenParser,
-                NineParser,
-                TenParser,
-                NineParser,
-                TenParser,
-                FourParser,
-                FiveParser,
-                OneParser,
-                OneParser,
-                OneParser
-            };
+        private readonly TokenParser oneParser;
+
+        private readonly IEnumerable<TokenParser> tokenParsers;
+
+        public RomanNumeralParser()
+        {
+            this.oneParser = new SimpleTokenParser('I', 1);
+            this.fiveParser = new SimpleTokenParser('V', 5);
+            this.fourParser = new ModifiedTokenParser('I', -1, fiveParser as SimpleTokenParser);
+            this.tenParser = new SimpleTokenParser('X', 10);
+            this.nineParser = new ModifiedTokenParser('I', -1, tenParser as SimpleTokenParser);
+            this.fiftyParser = new SimpleTokenParser('L', 50);
+            this.fourtyParser = new ModifiedTokenParser('X', -10, fiftyParser as SimpleTokenParser);
+            this.oneHundredParser = new SimpleTokenParser('C', 100);
+
+            tokenParsers =
+                new TokenParser[]
+                {
+                    this.oneHundredParser,
+                    this.oneHundredParser,
+                    this.oneHundredParser,
+                    this.fourtyParser,
+                    this.fiftyParser,
+                    this.tenParser,
+                    this.tenParser,
+                    this.nineParser,
+                    this.tenParser,
+                    this.fourParser,
+                    this.fiveParser,
+                    this.oneParser,
+                    this.oneParser,
+                    this.oneParser
+                };
+        }
 
         public int Parse(string numeral)
         {
@@ -58,18 +73,6 @@ namespace CodinGame.TheseRomansAreCrazy
             }
 
             return result;
-        }
-
-        private static Tuple<string, int> Identity(string s)
-        {
-            return new Tuple<string, int>(s, 0);
-        }
-
-        interface ITokenParser
-        {
-            Func<string, bool> CanParse { get; }
-
-            Func<string, Tuple<string, int>> Parse { get; }
         }
 
         abstract class TokenParser
@@ -106,7 +109,7 @@ namespace CodinGame.TheseRomansAreCrazy
         {
             public SimpleTokenParser(char letter, int value)
                 : base(
-                      s => s.FirstOrDefault() == letter,
+                      s => s.TraceAs("SimpleParser s") && s.FirstOrDefault() == letter,
                       s => new Tuple<string, int>(s.Substring(1), value))
             {
             }
@@ -114,12 +117,38 @@ namespace CodinGame.TheseRomansAreCrazy
 
         class ModifiedTokenParser : TokenParser
         {
-            public ModifiedTokenParser(char modifierLetter, int modifierValue, char letter, int value)
+            public ModifiedTokenParser(char modifierLetter, int modifierValue, SimpleTokenParser tokenParserToModify)//// char letter, int value)
                 : base(
-                     s => s.FirstOrDefault() == modifierLetter && s.Count() > 1 && s[1] == letter,
-                     s => new Tuple<string, int>(s.Substring(2), value - modifierValue))
+                     s => tokenParserToModify.ArgumentIsNotNull(nameof(tokenParserToModify))
+                        && s.TraceAs("ModifiedParser s")
+                        && s.FirstOrDefault() == modifierLetter
+                        && s.Count() > 1 // TODO review: maybe it's redundant
+                        && tokenParserToModify.CanParse(s.Substring(1)),
+                     s => new Tuple<string, int>(
+                         s.Substring(2),
+                         tokenParserToModify.Parse(s.Substring(1)).Item2 + modifierValue))
             {
             }
+        }
+    }
+
+    public static class Tracers
+    {
+        public static bool TraceAs(this string value, string message)
+        {
+            System.Diagnostics.Trace.WriteLine($"{message}: {value}");
+            return true;
+        }
+    }
+
+    public static class Guards
+    {
+        public static bool ArgumentIsNotNull(this object value, string name)
+        {
+            if (value == null)
+                throw new ArgumentNullException(name);
+
+            return true;
         }
     }
 }
