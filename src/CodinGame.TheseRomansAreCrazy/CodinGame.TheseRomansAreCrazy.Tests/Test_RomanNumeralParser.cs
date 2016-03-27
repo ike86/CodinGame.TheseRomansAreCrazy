@@ -69,6 +69,26 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
                 result.Should().Be(4);
             }
 
+            [TestMethod]
+            public void ReturnsTen_If_NumeralIs_X()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("X");
+
+                result.Should().Be(10);
+            }
+            
+            [TestMethod]
+            public void ReturnsThirty_If_NumeralIs_XXX()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("XXX");
+
+                result.Should().Be(30);
+            }
+
             private static RomanNumeralParser CreateSubject()
             {
                 return new RomanNumeralParser();

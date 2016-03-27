@@ -9,6 +9,11 @@ namespace CodinGame.TheseRomansAreCrazy
 {
     public class RomanNumeralParser
     {
+        private static TokenParser TenParser =
+            new TokenParser(
+                    s => s.FirstOrDefault() == 'X',
+                    s => new Tuple<string, int>(s.Substring(1), 10));
+
         private static TokenParser FourParser =
             new TokenParser(
                     s => s.FirstOrDefault() == 'I' && s.Count() > 1 && s[1] == 'V',
@@ -27,6 +32,9 @@ namespace CodinGame.TheseRomansAreCrazy
         private IEnumerable<TokenParser> tokenParsers =
             new TokenParser[]
             {
+                TenParser,
+                TenParser,
+                TenParser,
                 FourParser,
                 FiveParser,
                 OneParser,
