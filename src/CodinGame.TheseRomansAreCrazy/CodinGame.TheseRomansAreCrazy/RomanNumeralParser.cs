@@ -9,31 +9,24 @@ namespace CodinGame.TheseRomansAreCrazy
 {
     public class RomanNumeralParser
     {
-        private static TokenParser TenParser =
-            new TokenParser(
-                    s => s.FirstOrDefault() == 'X',
-                    s => new Tuple<string, int>(s.Substring(1), 10));
+        private static TokenParser NineParser = new ModifiedTokenParser('I', 1, 'X', 10);
 
-        private static TokenParser FourParser =
-            new TokenParser(
-                    s => s.FirstOrDefault() == 'I' && s.Count() > 1 && s[1] == 'V',
-                    s => new Tuple<string, int>(s.Substring(2), 4));
+        private static TokenParser TenParser = new SimpleTokenParser('X', 10);
 
-        private static TokenParser FiveParser =
-            new TokenParser(
-                    s => s.FirstOrDefault() == 'V',
-                    s => new Tuple<string, int>(s.Substring(1), 5));
+        private static TokenParser FourParser = new ModifiedTokenParser('I', 1, 'V', 5);
 
-        private static TokenParser OneParser =
-            new TokenParser(
-                    s => s.FirstOrDefault() == 'I',
-                    s => new Tuple<string, int>(s.Substring(1), 1));
+        private static TokenParser FiveParser = new SimpleTokenParser('V', 5);
+
+        private static TokenParser OneParser = new SimpleTokenParser('I', 1);
 
         private IEnumerable<TokenParser> tokenParsers =
             new TokenParser[]
             {
+                NineParser,
                 TenParser,
+                NineParser,
                 TenParser,
+                NineParser,
                 TenParser,
                 FourParser,
                 FiveParser,
@@ -64,17 +57,32 @@ namespace CodinGame.TheseRomansAreCrazy
             return new Tuple<string, int>(s, 0);
         }
 
-        class TokenParser
+        interface ITokenParser
+        {
+            Func<string, bool> CanParse { get; }
+
+            Func<string, Tuple<string, int>> Parse { get; }
+        }
+
+        abstract class TokenParser
         {
             private readonly Func<string, bool> canParse;
             private readonly Func<string, Tuple<string, int>> parse;
 
-            public TokenParser(
+            protected TokenParser(
                 Expression<Func<string, bool>> canParse,
                 Func<string, Tuple<string, int>> parse)
             {
                 this.canParse = canParse.Compile();
                 this.parse = parse;
+            }
+
+            public Func<string, bool> CanParse
+            {
+                get
+                {
+                    return canParse;
+                }
             }
 
             public Func<string, Tuple<string, int>> Parse
@@ -84,13 +92,25 @@ namespace CodinGame.TheseRomansAreCrazy
                     return parse;
                 }
             }
+        }
 
-            public Func<string, bool> CanParse
+        class SimpleTokenParser : TokenParser
+        {
+            public SimpleTokenParser(char letter, int value)
+                : base(
+                      s => s.FirstOrDefault() == letter,
+                      s => new Tuple<string, int>(s.Substring(1), value))
             {
-                get
-                {
-                    return canParse;
-                }
+            }
+        }
+
+        class ModifiedTokenParser : TokenParser
+        {
+            public ModifiedTokenParser(char modifierLetter, int modifierValue, char letter, int value)
+                : base(
+                     s => s.FirstOrDefault() == modifierLetter && s.Count() > 1 && s[1] == letter,
+                     s => new Tuple<string, int>(s.Substring(2), value - modifierValue))
+            {
             }
         }
     }
