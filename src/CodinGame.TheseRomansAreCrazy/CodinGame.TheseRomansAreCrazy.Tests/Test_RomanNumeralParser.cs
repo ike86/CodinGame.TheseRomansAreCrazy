@@ -149,6 +149,26 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
                 result.Should().Be(40);
             }
 
+            [TestMethod]
+            public void ReturnsNinety_If_NumeralIs_XC()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("XC");
+
+                result.Should().Be(90);
+            }
+            
+            [TestMethod]
+            public void ReturnsTwoHundredAndNinety_If_NumeralIs_CCXC()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("CCXC");
+
+                result.Should().Be(290);
+            }
+
             private static RomanNumeralParser CreateSubject()
             {
                 return new RomanNumeralParser();
