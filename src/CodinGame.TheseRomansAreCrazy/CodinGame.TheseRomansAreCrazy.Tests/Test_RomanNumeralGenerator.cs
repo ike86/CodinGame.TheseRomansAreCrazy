@@ -128,6 +128,46 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be("L");
             }
+
+            [TestMethod]
+            public void ReturnsNumeral_XC_If_ValueIsNinety()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(90);
+
+                result.Should().Be("XC");
+            }
+
+            [TestMethod]
+            public void ReturnsNumeral_C_If_ValueIsOneHundred()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(100);
+
+                result.Should().Be("C");
+            }
+
+            [TestMethod]
+            public void ReturnsNumeral_CCXC_If_ValueIsTwoHundredAndNinety()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(290);
+
+                result.Should().Be("CCXC");
+            }
+
+            [TestMethod]
+            public void ReturnsNumeral_CCC_If_ValueIsThreeHundred()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(300);
+
+                result.Should().Be("CCC");
+            }
         }
     }
 }

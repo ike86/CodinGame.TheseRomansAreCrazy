@@ -9,40 +9,38 @@ namespace CodinGame.TheseRomansAreCrazy
 {
     public class RomanNumeralGenerator
     {
-        private readonly Generator fiftyGenerator;
-        private readonly Generator fourtyGenerator;
-        private readonly Generator tenGenerator;
-        private readonly Generator nineGenerator;
-        private readonly Generator fiveGenerator;
-        private readonly Generator fourGenerator;
-        private readonly Generator oneGenerator;
-
         private readonly IEnumerable<Generator> generators;
 
         public RomanNumeralGenerator()
         {
-            this.oneGenerator = new Generator(1, "I");
-            this.fourGenerator = new Generator(4, "IV");
-            this.fiveGenerator = new Generator(5, "V");
-            this.nineGenerator = new Generator(9, "IX");
-            this.tenGenerator = new Generator(10, "X");
-            this.fourtyGenerator = new Generator(40, "XL");
-            this.fiftyGenerator = new Generator(50, "L");
+            var oneGenerator = new Generator(1, "I");
+            var fourGenerator = new Generator(4, "IV");
+            var fiveGenerator = new Generator(5, "V");
+            var nineGenerator = new Generator(9, "IX");
+            var tenGenerator = new Generator(10, "X");
+            var fourtyGenerator = new Generator(40, "XL");
+            var fiftyGenerator = new Generator(50, "L");
+            var ninetyGenerator = new Generator(90, "XC");
+            var oneHundredGenerator = new Generator(100, "C");
 
             this.generators =
                 new Generator[]
                 {
-                    this.fiftyGenerator,
-                    this.fourtyGenerator,
-                    this.tenGenerator,
-                    this.tenGenerator,
-                    this.tenGenerator,
-                    this.nineGenerator,
-                    this.fiveGenerator,
-                    this.fourGenerator,
-                    this.oneGenerator,
-                    this.oneGenerator,
-                    this.oneGenerator
+                    oneHundredGenerator,
+                    oneHundredGenerator,
+                    oneHundredGenerator,
+                    ninetyGenerator,
+                    fiftyGenerator,
+                    fourtyGenerator,
+                    tenGenerator,
+                    tenGenerator,
+                    tenGenerator,
+                    nineGenerator,
+                    fiveGenerator,
+                    fourGenerator,
+                    oneGenerator,
+                    oneGenerator,
+                    oneGenerator
                 };
         }
 
