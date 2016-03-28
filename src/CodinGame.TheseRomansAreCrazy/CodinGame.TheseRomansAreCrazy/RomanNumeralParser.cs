@@ -137,7 +137,6 @@ namespace CodinGame.TheseRomansAreCrazy
                      s => tokenParserToModify.ArgumentIsNotNull(nameof(tokenParserToModify))
                         && s.TraceAs("ModifiedParser s")
                         && s.FirstOrDefault() == modifierLetter
-                        && s.Count() > 1 // TODO review: maybe it's redundant
                         && tokenParserToModify.CanParse(s.Substring(1)),
                      s => new Tuple<string, int>(
                          s.Substring(2),
