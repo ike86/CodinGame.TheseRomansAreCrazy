@@ -96,10 +96,10 @@ namespace CodinGame.TheseRomansAreCrazy
             private readonly Func<string, Tuple<string, int>> parse;
 
             protected TokenParser(
-                Expression<Func<string, bool>> canParse,
+                Func<string, bool> canParse,
                 Func<string, Tuple<string, int>> parse)
             {
-                this.canParse = canParse.Compile();
+                this.canParse = canParse;
                 this.parse = parse;
             }
 

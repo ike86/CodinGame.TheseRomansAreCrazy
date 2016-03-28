@@ -18,7 +18,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be(1);
             }
-
+            
             [TestMethod]
             public void ReturnsTwo_If_NumeralIs_II()
             {
@@ -198,8 +198,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be(4000);
             }
-
-
+            
             [TestMethod]
             public void ReturnsFourHundred_If_NumeralIs_CD()
             {
