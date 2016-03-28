@@ -9,6 +9,7 @@ namespace CodinGame.TheseRomansAreCrazy
 {
     public class RomanNumeralGenerator
     {
+        private readonly Generator nineGenerator;
         private readonly Generator fiveGenerator;
         private readonly Generator fourGenerator;
         private readonly Generator oneGenerator;
@@ -17,25 +18,32 @@ namespace CodinGame.TheseRomansAreCrazy
 
         public RomanNumeralGenerator()
         {
-            this.oneGenerator = new Generator(
-                        value => value > 0,
-                        value => new Tuple<int, string>(1, "I"));
-            this.fourGenerator = new Generator(
-                        value => value == 4,
-                        value => new Tuple<int, string>(4, "IV"));
-            this.fiveGenerator = new Generator(
-                        value => value >= 5,
-                        value => new Tuple<int, string>(5, "V"));
-
-
+            this.oneGenerator =
+                new Generator(
+                    value => value > 0,
+                    value => new Tuple<int, string>(1, "I"));
+            this.fourGenerator =
+                new Generator(
+                    value => value == 4,
+                    value => new Tuple<int, string>(4, "IV"));
+            this.fiveGenerator =
+                new Generator(
+                    value => value >= 5,
+                    value => new Tuple<int, string>(5, "V"));
+            this.nineGenerator =
+                new Generator(
+                    value => value == 9,
+                    value => new Tuple<int, string>(9, "IX"));
+            
             this.generators =
                 new Generator[]
                 {
-                    fiveGenerator,
-                    fourGenerator,
-                    oneGenerator,
-                    oneGenerator,
-                    oneGenerator
+                    this.nineGenerator,
+                    this.fiveGenerator,
+                    this.fourGenerator,
+                    this.oneGenerator,
+                    this.oneGenerator,
+                    this.oneGenerator
                 };
         }
 
