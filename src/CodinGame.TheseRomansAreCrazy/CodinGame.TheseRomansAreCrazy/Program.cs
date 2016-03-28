@@ -10,8 +10,11 @@ namespace CodinGame.TheseRomansAreCrazy
             string rom2 = Console.ReadLine();
 
             var parser = new RomanNumeralParser();
+            var generator = new RomanNumeralGenerator();
 
-            Console.WriteLine(parser.Parse(rom1) + parser.Parse(rom2));
+            Console.WriteLine(
+                generator.Generate(
+                    parser.Parse(rom1) + parser.Parse(rom2)));
         }
     }
 }
