@@ -21,13 +21,13 @@ namespace CodinGame.TheseRomansAreCrazy
 
         public RomanNumeralGenerator()
         {
-            this.oneGenerator = new WeakGenerator(1, "I");
-            this.fourGenerator = new StrictGenerator(4, "IV");
-            this.fiveGenerator = new WeakGenerator(5, "V");
-            this.nineGenerator = new StrictGenerator(9, "IX");
-            this.tenGenerator = new WeakGenerator(10, "X");
-            this.fourtyGenerator = new WeakGenerator(40, "XL");
-            this.fiftyGenerator = new WeakGenerator(50, "L");
+            this.oneGenerator = new Generator(1, "I");
+            this.fourGenerator = new Generator(4, "IV");
+            this.fiveGenerator = new Generator(5, "V");
+            this.nineGenerator = new Generator(9, "IX");
+            this.tenGenerator = new Generator(10, "X");
+            this.fourtyGenerator = new Generator(40, "XL");
+            this.fiftyGenerator = new Generator(50, "L");
 
             this.generators =
                 new Generator[]
@@ -64,12 +64,19 @@ namespace CodinGame.TheseRomansAreCrazy
             return result;
         }
 
-        abstract class Generator
+        class Generator
         {
             protected Generator(Func<int, bool> canGenerate, Func<int, Tuple<int, string>> generate)
             {
                 this.CanGenerate = canGenerate;
                 this.Generate = generate;
+            }
+
+            public Generator(int value, string outputToken)
+                : this(
+                      v => v >= value,
+                      v => new Tuple<int, string>(v - value, outputToken))
+            {
             }
 
             public Func<int, bool> CanGenerate
@@ -80,26 +87,6 @@ namespace CodinGame.TheseRomansAreCrazy
             public Func<int, Tuple<int, string>> Generate
             {
                 get; private set;
-            }
-        }
-
-        class StrictGenerator : Generator
-        {
-            public StrictGenerator(int value, string outputToken)
-                : base(
-                      v => v == value,
-                      v => new Tuple<int, string>(v - value, outputToken))
-            {
-            }
-        }
-
-        class WeakGenerator : Generator
-        {
-            public WeakGenerator(int value, string outputToken)
-                : base(
-                      v => v >= value,
-                      v => new Tuple<int, string>(v - value, outputToken))
-            {
             }
         }
     }
