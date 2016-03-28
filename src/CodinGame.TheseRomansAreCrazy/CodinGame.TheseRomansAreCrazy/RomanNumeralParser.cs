@@ -132,7 +132,7 @@ namespace CodinGame.TheseRomansAreCrazy
 
         class ModifiedTokenParser : TokenParser
         {
-            public ModifiedTokenParser(char modifierLetter, int modifierValue, SimpleTokenParser tokenParserToModify)//// char letter, int value)
+            public ModifiedTokenParser(char modifierLetter, int modifierValue, SimpleTokenParser tokenParserToModify)
                 : base(
                      s => tokenParserToModify.ArgumentIsNotNull(nameof(tokenParserToModify))
                         && s.TraceAs("ModifiedParser s")
