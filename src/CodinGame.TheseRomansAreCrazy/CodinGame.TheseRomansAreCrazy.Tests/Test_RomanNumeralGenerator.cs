@@ -88,6 +88,46 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be("X");
             }
+
+            [TestMethod]
+            public void ReturnsNumeral_XXX_If_ValueIsThrity()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(30);
+
+                result.Should().Be("XXX");
+            }
+            
+            [TestMethod]
+            public void ReturnsNumeral_XXIX_If_ValueIsTwentyNine()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(29);
+
+                result.Should().Be("XXIX");
+            }
+
+            [TestMethod]
+            public void ReturnsNumeral_XL_If_ValueIsFourty()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(40);
+
+                result.Should().Be("XL");
+            }
+
+            [TestMethod]
+            public void ReturnsNumeral_L_If_ValueIsFifty()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(50);
+
+                result.Should().Be("L");
+            }
         }
     }
 }
