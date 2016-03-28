@@ -199,6 +199,37 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
                 result.Should().Be(4000);
             }
 
+
+            [TestMethod]
+            public void ReturnsFourHundred_If_NumeralIs_CD()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("CD");
+
+                result.Should().Be(400);
+            }
+
+            [TestMethod]
+            public void ReturnsNineHundred_If_NumeralIs_CM()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("CM");
+
+                result.Should().Be(900);
+            }
+            
+            [TestMethod]
+            public void ReturnsThreeTousandAndNineHundred_If_NumeralIs_MMMCM()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("MMMCM");
+
+                result.Should().Be(3900);
+            }
+
             private static RomanNumeralParser CreateSubject()
             {
                 return new RomanNumeralParser();

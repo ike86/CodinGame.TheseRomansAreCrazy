@@ -9,51 +9,49 @@ namespace CodinGame.TheseRomansAreCrazy
 {
     public class RomanNumeralParser
     {
+        private readonly TokenParser nineHundredParser;
         private readonly TokenParser oneTousandParser;
-
+        private readonly TokenParser fourHundredParser;
         private readonly TokenParser fiveHundredParser;
-
         private readonly TokenParser ninetyParser;
-
         private readonly TokenParser oneHundredParser;
-
         private readonly TokenParser fourtyParser;
-
         private readonly TokenParser fiftyParser;
-
         private readonly TokenParser nineParser;
-
         private readonly TokenParser tenParser;
-
         private readonly TokenParser fourParser;
-
         private readonly TokenParser fiveParser;
-
         private readonly TokenParser oneParser;
-
         private readonly IEnumerable<TokenParser> tokenParsers;
 
         public RomanNumeralParser()
         {
             this.oneParser = new SimpleTokenParser('I', 1);
             this.fiveParser = new SimpleTokenParser('V', 5);
-            this.fourParser = new ModifiedTokenParser('I', -1, fiveParser as SimpleTokenParser);
+            this.fourParser = new ModifiedTokenParser('I', -1, this.fiveParser as SimpleTokenParser);
             this.tenParser = new SimpleTokenParser('X', 10);
-            this.nineParser = new ModifiedTokenParser('I', -1, tenParser as SimpleTokenParser);
+            this.nineParser = new ModifiedTokenParser('I', -1, this.tenParser as SimpleTokenParser);
             this.fiftyParser = new SimpleTokenParser('L', 50);
-            this.fourtyParser = new ModifiedTokenParser('X', -10, fiftyParser as SimpleTokenParser);
+            this.fourtyParser = new ModifiedTokenParser('X', -10, this.fiftyParser as SimpleTokenParser);
             this.oneHundredParser = new SimpleTokenParser('C', 100);
-            this.ninetyParser = new ModifiedTokenParser('X', -10, oneHundredParser as SimpleTokenParser);
+            this.ninetyParser = new ModifiedTokenParser('X', -10, this.oneHundredParser as SimpleTokenParser);
             this.fiveHundredParser = new SimpleTokenParser('D', 500);
+            this.fourHundredParser = new ModifiedTokenParser('C', -100, this.fiveHundredParser as SimpleTokenParser);
             this.oneTousandParser = new SimpleTokenParser('M', 1000);
+            this.nineHundredParser = new ModifiedTokenParser('C', -100, this.oneTousandParser as SimpleTokenParser);
 
             tokenParsers =
                 new TokenParser[]
                 {
+                    this.nineHundredParser,
                     this.oneTousandParser,
+                    this.nineHundredParser,
                     this.oneTousandParser,
+                    this.nineHundredParser,
                     this.oneTousandParser,
+                    this.nineHundredParser,
                     this.oneTousandParser,
+                    this.fourHundredParser,
                     this.fiveHundredParser,
                     this.ninetyParser,
                     this.oneHundredParser,
