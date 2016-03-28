@@ -168,6 +168,36 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be(290);
             }
+            
+            [TestMethod]
+            public void ReturnsFiveHundred_If_NumeralIs_D()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("D");
+
+                result.Should().Be(500);
+            }
+
+            [TestMethod]
+            public void ReturnsOneTousand_If_NumeralIs_M()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("M");
+
+                result.Should().Be(1000);
+            }
+
+            [TestMethod]
+            public void ReturnsFourTousand_If_NumeralIs_MMMM()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("MMMM");
+
+                result.Should().Be(4000);
+            }
 
             private static RomanNumeralParser CreateSubject()
             {

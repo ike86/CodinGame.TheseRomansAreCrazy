@@ -9,6 +9,10 @@ namespace CodinGame.TheseRomansAreCrazy
 {
     public class RomanNumeralParser
     {
+        private readonly TokenParser oneTousandParser;
+
+        private readonly TokenParser fiveHundredParser;
+
         private readonly TokenParser ninetyParser;
 
         private readonly TokenParser oneHundredParser;
@@ -40,10 +44,17 @@ namespace CodinGame.TheseRomansAreCrazy
             this.fourtyParser = new ModifiedTokenParser('X', -10, fiftyParser as SimpleTokenParser);
             this.oneHundredParser = new SimpleTokenParser('C', 100);
             this.ninetyParser = new ModifiedTokenParser('X', -10, oneHundredParser as SimpleTokenParser);
+            this.fiveHundredParser = new SimpleTokenParser('D', 500);
+            this.oneTousandParser = new SimpleTokenParser('M', 1000);
 
             tokenParsers =
                 new TokenParser[]
                 {
+                    this.oneTousandParser,
+                    this.oneTousandParser,
+                    this.oneTousandParser,
+                    this.oneTousandParser,
+                    this.fiveHundredParser,
                     this.ninetyParser,
                     this.oneHundredParser,
                     this.ninetyParser,
