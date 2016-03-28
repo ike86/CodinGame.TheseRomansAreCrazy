@@ -168,6 +168,56 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be("CCC");
             }
+
+            [TestMethod]
+            public void ReturnsNumeral_CD_If_ValueIsFourHundred()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(400);
+
+                result.Should().Be("CD");
+            }
+
+            [TestMethod]
+            public void ReturnsNumeral_D_If_ValueIsFiveHundred()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(500);
+
+                result.Should().Be("D");
+            }
+
+            [TestMethod]
+            public void ReturnsNumeral_M_If_ValueIsOneTousand()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(1000);
+
+                result.Should().Be("M");
+            }
+
+            [TestMethod]
+            public void ReturnsNumeral_MMMCM_If_ValueIsThreeTousandAndNineHundred()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(3900);
+
+                result.Should().Be("MMMCM");
+            }
+
+            [TestMethod]
+            public void ReturnsNumeral_MMMM_If_ValueIsFourTousand()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(4000);
+
+                result.Should().Be("MMMM");
+            }
         }
     }
 }

@@ -22,10 +22,21 @@ namespace CodinGame.TheseRomansAreCrazy
             var fiftyGenerator = new Generator(50, "L");
             var ninetyGenerator = new Generator(90, "XC");
             var oneHundredGenerator = new Generator(100, "C");
+            var fourHundredGenerator = new Generator(400, "CD");
+            var fiveHundredGenerator = new Generator(500, "D");
+            var nineHundredGenerator = new Generator(900, "CM");
+            var oneTousandGenerator = new Generator(1000, "M");
 
             this.generators =
                 new Generator[]
                 {
+                    oneTousandGenerator,
+                    oneTousandGenerator,
+                    oneTousandGenerator,
+                    oneTousandGenerator,
+                    nineHundredGenerator,
+                    fiveHundredGenerator,
+                    fourHundredGenerator,
                     oneHundredGenerator,
                     oneHundredGenerator,
                     oneHundredGenerator,
