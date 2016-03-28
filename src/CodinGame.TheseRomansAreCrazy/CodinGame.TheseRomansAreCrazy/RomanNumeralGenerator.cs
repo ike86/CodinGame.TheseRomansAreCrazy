@@ -10,6 +10,7 @@ namespace CodinGame.TheseRomansAreCrazy
     public class RomanNumeralGenerator
     {
         private readonly Generator fiveGenerator;
+        private readonly Generator fourGenerator;
         private readonly Generator oneGenerator;
 
         private readonly IEnumerable<Generator> generators;
@@ -19,14 +20,19 @@ namespace CodinGame.TheseRomansAreCrazy
             this.oneGenerator = new Generator(
                         value => value > 0,
                         value => new Tuple<int, string>(1, "I"));
+            this.fourGenerator = new Generator(
+                        value => value == 4,
+                        value => new Tuple<int, string>(4, "IV"));
             this.fiveGenerator = new Generator(
                         value => value >= 5,
                         value => new Tuple<int, string>(5, "V"));
+
 
             this.generators =
                 new Generator[]
                 {
                     fiveGenerator,
+                    fourGenerator,
                     oneGenerator,
                     oneGenerator,
                     oneGenerator

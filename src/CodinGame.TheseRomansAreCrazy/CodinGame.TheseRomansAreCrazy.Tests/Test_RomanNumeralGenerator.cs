@@ -58,6 +58,16 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be("VIII");
             }
+            
+            [TestMethod]
+            public void ReturnsNumeral_IV_If_ValueIsFour()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(4);
+
+                result.Should().Be("IV");
+            }
         }
     }
 }
