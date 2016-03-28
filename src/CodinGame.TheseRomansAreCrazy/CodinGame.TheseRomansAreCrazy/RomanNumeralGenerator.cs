@@ -9,6 +9,7 @@ namespace CodinGame.TheseRomansAreCrazy
 {
     public class RomanNumeralGenerator
     {
+        private readonly Generator tenGenerator;
         private readonly Generator nineGenerator;
         private readonly Generator fiveGenerator;
         private readonly Generator fourGenerator;
@@ -18,26 +19,16 @@ namespace CodinGame.TheseRomansAreCrazy
 
         public RomanNumeralGenerator()
         {
-            this.oneGenerator =
-                new Generator(
-                    value => value > 0,
-                    value => new Tuple<int, string>(1, "I"));
-            this.fourGenerator =
-                new Generator(
-                    value => value == 4,
-                    value => new Tuple<int, string>(4, "IV"));
-            this.fiveGenerator =
-                new Generator(
-                    value => value >= 5,
-                    value => new Tuple<int, string>(5, "V"));
-            this.nineGenerator =
-                new Generator(
-                    value => value == 9,
-                    value => new Tuple<int, string>(9, "IX"));
-            
+            this.oneGenerator = new WeakGenerator(1, "I");
+            this.fourGenerator = new StrictGenerator(4, "IV");
+            this.fiveGenerator = new WeakGenerator(5, "V");
+            this.nineGenerator = new StrictGenerator(9, "IX");
+            this.tenGenerator = new WeakGenerator(10, "X");
+
             this.generators =
                 new Generator[]
                 {
+                    this.tenGenerator,
                     this.nineGenerator,
                     this.fiveGenerator,
                     this.fourGenerator,
@@ -65,9 +56,9 @@ namespace CodinGame.TheseRomansAreCrazy
             return result;
         }
 
-        class Generator
+        abstract class Generator
         {
-            public Generator(Func<int, bool> canGenerate, Func<int, Tuple<int, string>> generate)
+            protected Generator(Func<int, bool> canGenerate, Func<int, Tuple<int, string>> generate)
             {
                 this.CanGenerate = canGenerate;
                 this.Generate = generate;
@@ -81,6 +72,26 @@ namespace CodinGame.TheseRomansAreCrazy
             public Func<int, Tuple<int, string>> Generate
             {
                 get; private set;
+            }
+        }
+
+        class StrictGenerator : Generator
+        {
+            public StrictGenerator(int value, string outputToken)
+                : base(
+                      v => v == value,
+                      v => new Tuple<int, string>(value, outputToken))
+            {
+            }
+        }
+
+        class WeakGenerator : Generator
+        {
+            public WeakGenerator(int value, string outputToken)
+                : base(
+                      v => v >= value,
+                      v => new Tuple<int, string>(value, outputToken))
+            {
             }
         }
     }

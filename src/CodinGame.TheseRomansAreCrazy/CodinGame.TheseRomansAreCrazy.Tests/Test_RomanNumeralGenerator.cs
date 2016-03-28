@@ -78,6 +78,16 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be("IX");
             }
+
+            [TestMethod]
+            public void ReturnsNumeral_X_If_ValueIsTen()
+            {
+                var subject = new RomanNumeralGenerator();
+
+                var result = subject.Generate(10);
+
+                result.Should().Be("X");
+            }
         }
     }
 }
