@@ -1,13 +1,13 @@
-﻿using System;
-
-namespace CodinGame.TheseRomansAreCrazy
+﻿namespace CodinGame.TheseRomansAreCrazy
 {
+    using System;
+
     internal class Program
     {
-        private static void Main(string[] args)
+        private static void Main()
         {
-            string rom1 = Console.ReadLine();
-            string rom2 = Console.ReadLine();
+            var rom1 = Console.ReadLine();
+            var rom2 = Console.ReadLine();
 
             var parser = new RomanNumeralParser();
             var generator = new RomanNumeralGenerator();

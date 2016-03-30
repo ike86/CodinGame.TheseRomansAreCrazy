@@ -1,75 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CodinGame.TheseRomansAreCrazy
+﻿namespace CodinGame.TheseRomansAreCrazy
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class RomanNumeralParser
     {
-        private readonly TokenParser nineHundredParser;
-        private readonly TokenParser oneTousandParser;
-        private readonly TokenParser fourHundredParser;
-        private readonly TokenParser fiveHundredParser;
-        private readonly TokenParser ninetyParser;
-        private readonly TokenParser oneHundredParser;
-        private readonly TokenParser fourtyParser;
-        private readonly TokenParser fiftyParser;
-        private readonly TokenParser nineParser;
-        private readonly TokenParser tenParser;
-        private readonly TokenParser fourParser;
-        private readonly TokenParser fiveParser;
-        private readonly TokenParser oneParser;
         private readonly IEnumerable<TokenParser> tokenParsers;
 
         public RomanNumeralParser()
         {
-            this.oneParser = new SimpleTokenParser('I', 1);
-            this.fiveParser = new SimpleTokenParser('V', 5);
-            this.fourParser = new ModifiedTokenParser('I', -1, this.fiveParser as SimpleTokenParser);
-            this.tenParser = new SimpleTokenParser('X', 10);
-            this.nineParser = new ModifiedTokenParser('I', -1, this.tenParser as SimpleTokenParser);
-            this.fiftyParser = new SimpleTokenParser('L', 50);
-            this.fourtyParser = new ModifiedTokenParser('X', -10, this.fiftyParser as SimpleTokenParser);
-            this.oneHundredParser = new SimpleTokenParser('C', 100);
-            this.ninetyParser = new ModifiedTokenParser('X', -10, this.oneHundredParser as SimpleTokenParser);
-            this.fiveHundredParser = new SimpleTokenParser('D', 500);
-            this.fourHundredParser = new ModifiedTokenParser('C', -100, this.fiveHundredParser as SimpleTokenParser);
-            this.oneTousandParser = new SimpleTokenParser('M', 1000);
-            this.nineHundredParser = new ModifiedTokenParser('C', -100, this.oneTousandParser as SimpleTokenParser);
+            var oneParser = new SimpleTokenParser('I', 1);
+            var fiveParser = new SimpleTokenParser('V', 5);
+            var fourParser = new ModifiedTokenParser('I', -1, fiveParser as SimpleTokenParser);
+            var tenParser = new SimpleTokenParser('X', 10);
+            var nineParser = new ModifiedTokenParser('I', -1, tenParser as SimpleTokenParser);
+            var fiftyParser = new SimpleTokenParser('L', 50);
+            var fourtyParser = new ModifiedTokenParser('X', -10, fiftyParser as SimpleTokenParser);
+            var oneHundredParser = new SimpleTokenParser('C', 100);
+            var ninetyParser = new ModifiedTokenParser('X', -10, oneHundredParser as SimpleTokenParser);
+            var fiveHundredParser = new SimpleTokenParser('D', 500);
+            var fourHundredParser = new ModifiedTokenParser('C', -100, fiveHundredParser as SimpleTokenParser);
+            var oneTousandParser = new SimpleTokenParser('M', 1000);
+            var nineHundredParser = new ModifiedTokenParser('C', -100, oneTousandParser as SimpleTokenParser);
 
-            tokenParsers =
+            this.tokenParsers =
                 new TokenParser[]
                 {
-                    this.nineHundredParser,
-                    this.oneTousandParser,
-                    this.nineHundredParser,
-                    this.oneTousandParser,
-                    this.nineHundredParser,
-                    this.oneTousandParser,
-                    this.nineHundredParser,
-                    this.oneTousandParser,
-                    this.fourHundredParser,
-                    this.fiveHundredParser,
-                    this.ninetyParser,
-                    this.oneHundredParser,
-                    this.ninetyParser,
-                    this.oneHundredParser,
-                    this.ninetyParser,
-                    this.oneHundredParser,
-                    this.fourtyParser,
-                    this.fiftyParser,
-                    this.tenParser,
-                    this.tenParser,
-                    this.nineParser,
-                    this.tenParser,
-                    this.fourParser,
-                    this.fiveParser,
-                    this.oneParser,
-                    this.oneParser,
-                    this.oneParser
+                    nineHundredParser,
+                    oneTousandParser,
+                    nineHundredParser,
+                    oneTousandParser,
+                    nineHundredParser,
+                    oneTousandParser,
+                    nineHundredParser,
+                    oneTousandParser,
+                    fourHundredParser,
+                    fiveHundredParser,
+                    ninetyParser,
+                    oneHundredParser,
+                    ninetyParser,
+                    oneHundredParser,
+                    ninetyParser,
+                    oneHundredParser,
+                    fourtyParser,
+                    fiftyParser,
+                    tenParser,
+                    tenParser,
+                    nineParser,
+                    tenParser,
+                    fourParser,
+                    fiveParser,
+                    oneParser,
+                    oneParser,
+                    oneParser
                 };
         }
 
@@ -90,37 +74,28 @@ namespace CodinGame.TheseRomansAreCrazy
             return result;
         }
 
-        abstract class TokenParser
+        private abstract class TokenParser
         {
-            private readonly Func<string, bool> canParse;
-            private readonly Func<string, Tuple<string, int>> parse;
-
             protected TokenParser(
                 Func<string, bool> canParse,
                 Func<string, Tuple<string, int>> parse)
             {
-                this.canParse = canParse;
-                this.parse = parse;
+                this.CanParse = canParse;
+                this.Parse = parse;
             }
 
             public Func<string, bool> CanParse
             {
-                get
-                {
-                    return canParse;
-                }
+                get; private set;
             }
 
             public Func<string, Tuple<string, int>> Parse
             {
-                get
-                {
-                    return parse;
-                }
+                get; private set;
             }
         }
 
-        class SimpleTokenParser : TokenParser
+        private class SimpleTokenParser : TokenParser
         {
             public SimpleTokenParser(char letter, int value)
                 : base(
@@ -130,11 +105,11 @@ namespace CodinGame.TheseRomansAreCrazy
             }
         }
 
-        class ModifiedTokenParser : TokenParser
+        private class ModifiedTokenParser : TokenParser
         {
             public ModifiedTokenParser(char modifierLetter, int modifierValue, SimpleTokenParser tokenParserToModify)
                 : base(
-                     s => tokenParserToModify.ArgumentIsNotNull(nameof(tokenParserToModify))
+                     s => tokenParserToModify.ArgumentIsNotNull("tokenParserToModify")
                         && s.TraceAs("ModifiedParser s")
                         && s.FirstOrDefault() == modifierLetter
                         && tokenParserToModify.CanParse(s.Substring(1)),
@@ -150,7 +125,7 @@ namespace CodinGame.TheseRomansAreCrazy
     {
         public static bool TraceAs(this string value, string message)
         {
-            System.Diagnostics.Trace.WriteLine($"{message}: {value}");
+            System.Diagnostics.Trace.WriteLine(message + ": " + value);
             return true;
         }
     }

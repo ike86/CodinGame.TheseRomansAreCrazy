@@ -1,9 +1,8 @@
-﻿using System;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace CodinGame.TheseRomansAreCrazy.Tests
+﻿namespace CodinGame.TheseRomansAreCrazy.Tests
 {
+    using FluentAssertions;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     public class Test_RomanNumeralParser
     {
         [TestClass]
@@ -18,7 +17,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be(1);
             }
-            
+
             [TestMethod]
             public void ReturnsTwo_If_NumeralIs_II()
             {
@@ -78,7 +77,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be(10);
             }
-            
+
             [TestMethod]
             public void ReturnsThirty_If_NumeralIs_XXX()
             {
@@ -88,7 +87,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be(30);
             }
-            
+
             [TestMethod]
             public void ReturnsNine_If_NumeralIs_IX()
             {
@@ -128,7 +127,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be(100);
             }
-            
+
             [TestMethod]
             public void ReturnsThreeHundred_If_NumeralIs_CCC()
             {
@@ -158,7 +157,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be(90);
             }
-            
+
             [TestMethod]
             public void ReturnsTwoHundredAndNinety_If_NumeralIs_CCXC()
             {
@@ -168,7 +167,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be(290);
             }
-            
+
             [TestMethod]
             public void ReturnsFiveHundred_If_NumeralIs_D()
             {
@@ -198,7 +197,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be(4000);
             }
-            
+
             [TestMethod]
             public void ReturnsFourHundred_If_NumeralIs_CD()
             {
@@ -218,7 +217,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be(900);
             }
-            
+
             [TestMethod]
             public void ReturnsThreeTousandAndNineHundred_If_NumeralIs_MMMCM()
             {

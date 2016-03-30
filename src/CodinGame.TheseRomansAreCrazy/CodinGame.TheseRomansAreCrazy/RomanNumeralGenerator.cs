@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CodinGame.TheseRomansAreCrazy
+﻿namespace CodinGame.TheseRomansAreCrazy
 {
+    using System;
+    using System.Collections.Generic;
+
     public class RomanNumeralGenerator
     {
         private readonly IEnumerable<Generator> generators;
@@ -73,7 +69,7 @@ namespace CodinGame.TheseRomansAreCrazy
             return result;
         }
 
-        class Generator
+        private class Generator
         {
             protected Generator(Func<int, bool> canGenerate, Func<int, Tuple<int, string>> generate)
             {

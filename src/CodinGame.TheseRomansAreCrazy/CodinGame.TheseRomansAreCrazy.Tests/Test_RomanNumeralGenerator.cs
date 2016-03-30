@@ -1,9 +1,8 @@
-﻿using System;
-using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace CodinGame.TheseRomansAreCrazy.Tests
+﻿namespace CodinGame.TheseRomansAreCrazy.Tests
 {
+    using FluentAssertions;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+
     public class Test_RomanNumeralGenerator
     {
         [TestClass]
@@ -58,7 +57,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be("VIII");
             }
-            
+
             [TestMethod]
             public void ReturnsNumeral_IV_If_ValueIsFour()
             {
@@ -98,7 +97,7 @@ namespace CodinGame.TheseRomansAreCrazy.Tests
 
                 result.Should().Be("XXX");
             }
-            
+
             [TestMethod]
             public void ReturnsNumeral_XXIX_If_ValueIsTwentyNine()
             {
