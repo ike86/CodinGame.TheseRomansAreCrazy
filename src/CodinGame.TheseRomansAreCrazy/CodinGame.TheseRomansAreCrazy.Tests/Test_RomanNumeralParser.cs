@@ -1,5 +1,7 @@
 ﻿namespace CodinGame.TheseRomansAreCrazy.Tests
 {
+    using System.IO;
+    using System.Linq;
     using FluentAssertions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -226,6 +228,47 @@
                 var result = subject.Parse("MMMCM");
 
                 result.Should().Be(3900);
+            }
+            
+            [TestMethod]
+            public void ReturnsProperNumer_For_AllValues___File()
+            {
+                // Arrange
+                var lines = File.ReadAllLines(@"./romans_3999.csv")
+                    .Select(l => l.Split(';'));
+                var subject = CreateSubject();
+
+                foreach (var line in lines)
+                {
+                    var value = int.Parse(line[0]);
+                    var romanNumeral = line[1];
+
+                    // Act
+                    var result = subject.Parse(romanNumeral);
+
+                    // Assert
+                    result.Should().Be(value, $"because {romanNumeral} is {value}");
+                }
+            }
+            
+            [TestMethod]
+            public void ReturnsThirtyNine_If_NumeralIs_XXXIX()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("XXXIX");
+
+                result.Should().Be(39);
+            }
+            
+            [TestMethod]
+            public void ReturnsThreeHundredAndNinety_If_NumeralIs_CCCXC()
+            {
+                var subject = CreateSubject();
+
+                var result = subject.Parse("CCCXC");
+
+                result.Should().Be(390);
             }
 
             private static RomanNumeralParser CreateSubject()

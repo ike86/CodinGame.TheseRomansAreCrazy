@@ -1,8 +1,12 @@
-﻿namespace CodinGame.TheseRomansAreCrazy.Tests
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+namespace CodinGame.TheseRomansAreCrazy.Tests
 {
+    using System.IO;
+    using System.Linq;
     using FluentAssertions;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-
+    using OpenQA.Selenium;
+    using OpenQA.Selenium.Firefox;
     public class Test_RomanNumeralGenerator
     {
         [TestClass]
@@ -216,6 +220,43 @@
                 var result = subject.Generate(4000);
 
                 result.Should().Be("MMMM");
+            }
+
+            [TestMethod, Ignore]
+            public void ReturnsProperNumer_For_AllValues___Selenium()
+            {
+                using (var webDriver = new FirefoxDriver())
+                {
+                    webDriver.Navigate().GoToUrl(@"https://www.google.hu/webhp?ion=1&espv=2&ie=UTF-8#q=3647+in+roman+numerals");
+                    var romanNumeral = webDriver.FindElement(By.XPath("//div[@class='vk_ans vk_bk']")).Text;
+
+                    var subject = new RomanNumeralGenerator();
+
+                    var result = subject.Generate(3647);
+
+                    result.Should().Be(romanNumeral);
+                }
+            }
+
+            [TestMethod]
+            public void ReturnsProperNumer_For_AllValues___File()
+            {
+                // Arrange
+                var lines = File.ReadAllLines(@"./romans_3999.csv")
+                    .Select(l=> l.Split(';'));
+                var subject = new RomanNumeralGenerator();
+
+                foreach (var line in lines)
+                {
+                    var value = int.Parse(line[0]);
+                    var romanNumeral = line[1];
+
+                    // Act
+                    var result = subject.Generate(value);
+
+                    // Assert
+                    result.Should().Be(romanNumeral);
+                }
             }
         }
     }
